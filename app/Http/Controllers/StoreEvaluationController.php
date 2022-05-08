@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
+use App\Services\CompanyService;
 use App\Http\Resources\EvaluationResource;
 use App\Http\Requests\StoreEvaluationRequest;
 
 class StoreEvaluationController extends Controller
 {
-    public function __construct(protected Evaluation $repository)
-    {
+    public function __construct(
+        protected Evaluation $repository,
+        protected CompanyService $service
+    ) {
     }
 
     /**
@@ -20,9 +23,16 @@ class StoreEvaluationController extends Controller
      */
     public function handle(StoreEvaluationRequest $request)
     {
-        $evaluations = $this->repository->create($request->all());
+        $data = $request->all();
 
-        return (new EvaluationResource($evaluations))
-            ->response()->setStatusCode(201);
+        $company = $this->service->getCompany($data['company']);
+
+        if (!$company) {
+            return response()->json(['message' => 'invalid company'], 400);
+        }
+
+        $evaluations = $this->repository->create($data);
+
+        return (new EvaluationResource($evaluations))->response()->setStatusCode(201);
     }
 }

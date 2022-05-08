@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'company' => [
+        'key' => env('COMPANY_SERVICE_KEY'),
+        'url' => env('COMPANY_SERVICE_URL'),
+    ]
 ];

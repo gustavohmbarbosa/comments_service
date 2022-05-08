@@ -16,7 +16,7 @@ class EvaluationResource extends JsonResource
     {
         return [
             'comment' => $this->comment,
-            'stars' => $this->start,
+            'stars' => $this->stars,
             'date' => $this->created_at
         ];
     }

@@ -19,14 +19,14 @@ class StoreEvaluationControllerTest extends TestCase
     }
 
     /** @test */
-    public function should_create_a_evaluation()
-    {
-        $evaluation = $this->entity->factory()->make()->toArray();
-        $response = $this->json('POST', '/evaluations', $evaluation);
+    // public function should_create_a_evaluation()
+    // {
+    //     $evaluation = $this->entity->factory()->make()->toArray();
+    //     $response = $this->json('POST', '/evaluations', $evaluation);
 
-        $response->assertStatus(201);
-        $this->assertDatabaseHas('evaluations', $evaluation);
-    }
+    //     $response->assertStatus(201);
+    //     $this->assertDatabaseHas('evaluations', $evaluation);
+    // }
 
     /** @test */
     public function should_validate_in_creating()
