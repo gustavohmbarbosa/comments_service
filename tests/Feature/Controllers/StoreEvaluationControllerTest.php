@@ -27,4 +27,12 @@ class StoreEvaluationControllerTest extends TestCase
         $response->assertStatus(201);
         $this->assertDatabaseHas('evaluations', $evaluation);
     }
+
+    /** @test */
+    public function should_validate_in_creating()
+    {
+        $response = $this->json('POST', '/evaluations', []);
+
+        $response->assertStatus(422);
+    }
 }
