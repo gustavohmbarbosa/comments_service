@@ -1,0 +1,75 @@
+version: "3.7"
+services: 
+  # Microservice
+  comments_app:
+    build: 
+      args:
+        user: comments_user
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile 
+    image: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes: 
+      - ./:/var/www
+    networks: 
+      - comments_service
+
+  # Servidor nginx
+  nginx: 
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - 8001:80
+      - 444:443
+    volumes: 
+      - ./:/var/www
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    networks: 
+      - comments_service
+
+  # Queue
+  queue:
+    build: 
+      args:
+        user: comments_user
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile 
+    command: 'php artisan queue:work'
+    restart: unless-stopped
+    volumes: 
+      - ./:/var/www
+    depends_on:
+      - redis
+    networks: 
+      - comments_service
+
+  # Database mysql
+  comments_database: 
+    image: mysql:8.0.29
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 3334:3306
+    volumes: 
+      - ./.docker/mysql/dbdata:/var/lib/mysql
+    networks: 
+      - comments_service
+
+  # Redis
+  redis: 
+    image: redis:latest
+    ports: 
+      - 6379:6379
+    networks: 
+      - comments_service
+
+networks:
+  comments_service: 
+    driver: bridge

@@ -1,0 +1,6 @@
+{
+    "private": true,
+    "devDependencies": {
+        "git-commit-msg-linter": "^4.1.2"
+    }
+}
