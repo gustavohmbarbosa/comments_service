@@ -13,7 +13,7 @@ class StoreEvaluationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreEvaluationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'company' => 'required',
+            'comment' => 'required|string|min:3|max:5000',
+            'stars' => 'required|integer|min:1|max:5',
         ];
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
 use App\Http\Resources\EvaluationResource;
-use App\Http\Requests\StoreEvaluationRequest;
 
 class GetCompanyEvaluationsController extends Controller
 {

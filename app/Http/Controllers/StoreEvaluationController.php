@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
-use Illuminate\Http\Request;
 use App\Http\Resources\EvaluationResource;
+use App\Http\Requests\StoreEvaluationRequest;
 
 class StoreEvaluationController extends Controller
 {
@@ -15,10 +15,10 @@ class StoreEvaluationController extends Controller
     /**
      * Display a listing of the resource.
      * 
-     * @param Request $request
+     * @param StoreEvaluationRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function handle(Request $request)
+    public function handle(StoreEvaluationRequest $request)
     {
         $evaluations = $this->repository->create($request->all());
 
