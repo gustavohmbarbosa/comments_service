@@ -27,6 +27,20 @@ class GetCompanyEvaluationsControllerTest extends TestCase
         $response = $this->json('GET', "/{$company}/evaluations");
 
         $response->assertStatus(200);
-        $response->assertJsonCount(1);
+        $response->assertJsonCount(1, 'data');
+    }
+
+    /** @test */
+    public function should_return_data_in_a_valid_format()
+    {
+        $evaluation = $this->entity->factory()->create();
+        $company = $evaluation->company;
+
+        $response = $this->json('GET', "/{$company}/evaluations");
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => ['*' => ['comment', 'stars', 'date']]
+        ]);
     }
 }
