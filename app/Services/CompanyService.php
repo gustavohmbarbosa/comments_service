@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Services\Traits\ConsumeExternalService;
-use stdClass;
+use Gustavohmbarbosa\MicroservicesCommon\Services\Traits\ConsumeExternalService;
 
 class CompanyService
 {
@@ -20,7 +19,7 @@ class CompanyService
      * 
      * @return stdClass|null
      */
-    public function getCompany(string $id): ?stdClass
+    public function getCompany(string $id): ?\stdClass
     {
         $response = $this->request('GET', "/companies/{$id}");
 
